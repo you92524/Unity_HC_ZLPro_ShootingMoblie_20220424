@@ -22,13 +22,16 @@ namespace Andews
 		private float rangeDirectionIcon = 2.5f;
 		[SerializeField, Header("角色旋轉速度"), Range(0, 100)]
 		private float speedTurn = 6.0f;
-
+		[SerializeField, Header("動畫參數走路")]
+		private string parameterwalk = "跑步開關";
 
 		private Rigidbody rig;
+		private Animator ani;
 
 		private void Awake()
 		{
 			rig = GetComponent<Rigidbody>();
+			ani = GetComponent<Animator>();
 		}
 
 
@@ -38,6 +41,7 @@ namespace Andews
 			//GetJoystickValue();
 			UpdateDirectionIconPos();
 			LookDirectionIcon();
+			UpdateAnimation();
 		}
 
 		private void FixedUpdate()
@@ -89,6 +93,17 @@ namespace Andews
 			//角色歐拉角度 = 三維向量(0,原本的歐拉角度Y,0)
 			transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 		}
+
+		/// <summary>
+		/// 更新動畫
+		/// </summary>
+		private void UpdateAnimation()
+		{
+			//是否跑步 = 虛擬搖桿 水平 不為零 或者 垂直 不為零
+			bool run = joystick.Horizontal != 0 || joystick.Vertical != 0;
+			ani.SetBool(parameterwalk, run);
+		}
+
 
 
 
