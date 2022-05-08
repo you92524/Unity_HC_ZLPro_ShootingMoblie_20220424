@@ -16,6 +16,14 @@ namespace Andews
 		private Joystick joystick;
 		[SerializeField, Header("移動速度"), Range(0, 300)]
 		private float speed = 10.0f;
+		[SerializeField, Header("角色方向圖示")]
+		private Transform traDirectionIcon;
+		[SerializeField, Header("角色方向圖示範圍"), Range(0, 5)]
+		private float rangeDirectionIcon = 2.5f;
+		[SerializeField, Header("角色旋轉速度"), Range(0, 100)]
+		private float speedTurn = 6.0f;
+
+
 		private Rigidbody rig;
 
 		private void Awake()
@@ -27,7 +35,9 @@ namespace Andews
 
 		private void Update()
 		{
-			GetJoystickValue();
+			//GetJoystickValue();
+			UpdateDirectionIconPos();
+			LookDirectionIcon();
 		}
 
 		private void FixedUpdate()
@@ -53,6 +63,33 @@ namespace Andews
 			rig.velocity = new Vector3(joystick.Horizontal,0,joystick.Vertical)*speed;
 
 		}
+
+		/// <summary>
+		/// 更新角色方向圖示的座標
+		/// </summary>
+		private void UpdateDirectionIconPos()
+		{
+			//新座標 = 角色的座標 + 三維向量(虛擬搖桿的水平與垂直) * 方向圖示範圍
+			Vector3 pos = transform.position + new Vector3(joystick.Horizontal, 0.5f, joystick.Vertical) * rangeDirectionIcon;
+			//更新方向圖示的座標 = 新座標
+			traDirectionIcon.position = pos;
+
+		}
+
+		/// <summary>
+		/// 面向方向圖示
+		/// </summary>
+		private void LookDirectionIcon()
+		{
+			//取得面向角度 = 四位元.面向角度(方向圖示-角色)-方向圖示與角色的向量
+			Quaternion look = Quaternion.LookRotation(traDirectionIcon.position - transform.position);
+			
+			//角色的角度 = 四位元.插值(角色的角度,面向角度,旋轉速度*一幀時間)
+			transform.rotation = Quaternion.Lerp(transform.rotation, look, speedTurn * Time.deltaTime);
+			//角色歐拉角度 = 三維向量(0,原本的歐拉角度Y,0)
+			transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+		}
+
 
 
 	}
