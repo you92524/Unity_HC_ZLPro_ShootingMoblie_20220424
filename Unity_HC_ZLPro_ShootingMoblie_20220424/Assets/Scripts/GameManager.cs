@@ -31,8 +31,8 @@ namespace Andrews
             traSpwanPointList = traSpawnPoint.ToList(); //陣列轉為清單資料結構
             
             //如果是連線進入的玩家，就在伺服器生成角色物件
-            if (photonView.IsMine)
-            {
+           // if (photonView.IsMine)
+           // {
                 int indexRandom = Random.Range(0, traSpwanPointList.Count); //取得隨機清單(0,清單的長度)
                 Transform tra = traSpwanPointList[indexRandom];             //取得隨機座標
 
@@ -41,8 +41,8 @@ namespace Andrews
                 PhotonNetwork.Instantiate(goCharacter.name, tra.position, tra.rotation);
 
                 traSpwanPointList.RemoveAt(indexRandom);                    //刪除已經取得的生成座標資料
-            }
-
+           // }
+        
         }
 
     }

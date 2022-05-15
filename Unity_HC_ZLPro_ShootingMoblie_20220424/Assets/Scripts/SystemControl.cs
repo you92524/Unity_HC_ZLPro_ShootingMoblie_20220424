@@ -1,5 +1,8 @@
 using UnityEngine;
 using Photon.Pun;
+using Cinemachine;
+using Andrews;
+using UnityEngine.UI;
 
 
 //namespace 命名空間:程式區塊
@@ -13,12 +16,12 @@ namespace Andews
 	public class SystemControl : MonoBehaviourPun
 	{
 
-		[SerializeField, Header("虛擬搖桿")]
-		private Joystick joystick;
+		
+		
 		[SerializeField, Header("移動速度"), Range(0, 300)]
 		private float speed = 10.0f;
-		[SerializeField, Header("角色方向圖示")]
-		private Transform traDirectionIcon;
+		
+		
 		[SerializeField, Header("角色方向圖示範圍"), Range(0, 5)]
 		private float rangeDirectionIcon = 2.5f;
 		[SerializeField, Header("角色旋轉速度"), Range(0, 100)]
@@ -34,17 +37,38 @@ namespace Andews
 
 		private Rigidbody rig;
 		private Animator ani;
+		private Joystick joystick;
+		private Transform traDirectionIcon;
+		private CinemachineVirtualCamera cvc;
+		private SystemAttack systemAttack;
+
 
 		private void Awake()
 		{
 			rig = GetComponent<Rigidbody>();
 			ani = GetComponent<Animator>();
+			systemAttack = GetComponent<SystemAttack>();
 
 			if (photonView.IsMine)
 			{
-				Instantiate(goCanvas);
-				Instantiate(goCanvasPlayerInfo);
-				Instantiate(goDirection);
+				PlayerUIFollow follow =  Instantiate(goCanvasPlayerInfo).GetComponent<PlayerUIFollow>();
+				follow.traPlayer = transform;
+
+				traDirectionIcon = Instantiate(goDirection).transform;  //取得角色方向圖示
+
+				//transform.Find(子物件名稱) - 透過名稱搜尋子物件
+				GameObject tempCanvas = Instantiate(goCanvas);
+				joystick = tempCanvas.transform.Find("Floating Joystick").GetComponent<Joystick>(); //取得畫布內的虛擬搖桿
+				systemAttack.btnFire = tempCanvas.transform.Find("發射").GetComponent<Button>();
+
+				cvc = GameObject.Find("CM管理器").GetComponent<CinemachineVirtualCamera>();    //取得攝影機 CM 管理器
+				cvc.Follow = transform;     //指定追蹤物件
+
+			}
+			//否則 不是進入的玩家 就關閉控制系統，避免控制到多個物件
+			else 
+			{
+				enabled = false;
 			}
 		}
 
