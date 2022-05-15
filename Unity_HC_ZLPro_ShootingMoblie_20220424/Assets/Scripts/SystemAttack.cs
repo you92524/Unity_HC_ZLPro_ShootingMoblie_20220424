@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Andews 
+namespace Andrews 
 {
     /// <summary>
     /// §ðÀ»¨t²Î

@@ -59,7 +59,7 @@ namespace Andews
 				//transform.Find(子物件名稱) - 透過名稱搜尋子物件
 				GameObject tempCanvas = Instantiate(goCanvas);
 				joystick = tempCanvas.transform.Find("Floating Joystick").GetComponent<Joystick>(); //取得畫布內的虛擬搖桿
-				systemAttack.btnFire = tempCanvas.transform.Find("發射").GetComponent<Button>();
+				systemAttack.btnFire = tempCanvas.transform.Find("發射按鈕").GetComponent<Button>();
 
 				cvc = GameObject.Find("CM管理器").GetComponent<CinemachineVirtualCamera>();    //取得攝影機 CM 管理器
 				cvc.Follow = transform;     //指定追蹤物件

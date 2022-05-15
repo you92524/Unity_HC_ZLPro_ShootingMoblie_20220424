@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Realtime; //引用Photon 即時 API
 using Photon.Pun;      //引用Photon Pun API
-using Photon.Pun.Demo.Cockpit;
+
 
 /// <summary>
 /// 大廳管理器
@@ -79,7 +79,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         print("<color=red>4. 加入隨機房間失敗</color>");
 
         RoomOptions ro = new RoomOptions();     //新增房間設定物件
-        ro.MaxPlayers = 5;                      //指定房間最大人數
+        ro.MaxPlayers = 3;                      //指定房間最大人數
         PhotonNetwork.CreateRoom("", ro);        //建立房間並給予房間物件
     }
 
