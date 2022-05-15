@@ -12,7 +12,7 @@ namespace Andrews
     public class AdsManager : MonoBehaviour , IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener
     {
         [SerializeField, Header("看完廣告的金幣"), Range(0, 1000)]
-        private int assCoinValue = 100;
+        private int addCoinValue = 100;
 
         private int coinPlayer;
 
@@ -76,7 +76,7 @@ namespace Andrews
         public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
         {
             print("<color=green>3.廣告顯示完成</color>");
-            coinPlayer = addCoinValue;
+            coinPlayer += addCoinValue;
             textCoin.text = coinPlayer.ToString();
 
         }
