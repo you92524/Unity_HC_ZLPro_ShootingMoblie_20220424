@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Realtime; //引用Photon 即時 API
 using Photon.Pun;      //引用Photon Pun API
+using Photon.Pun.Demo.Cockpit;
 
 /// <summary>
 /// 大廳管理器
@@ -48,7 +49,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedLobby();
         print("<color=yellow>2. 已經進入大廳</color>");
-        
+
         //對戰按鈕.互動 = 啟動
         btnBattle.interactable = true;
     }
@@ -59,7 +60,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //2.按鈕在點擊 On Click 後設定呼叫此方法
 
     //開始連線對戰
-    public void StartConnect() 
+    public void StartConnect()
     {
         print("<color=yellow>3. 開始連線</color>");
 
@@ -79,7 +80,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         RoomOptions ro = new RoomOptions();     //新增房間設定物件
         ro.MaxPlayers = 5;                      //指定房間最大人數
-        PhotonNetwork.CreateRoom("",ro);        //建立房間並給予房間物件
+        PhotonNetwork.CreateRoom("", ro);        //建立房間並給予房間物件
     }
 
     //加入房間
@@ -91,9 +92,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         int maxCount = PhotonNetwork.CurrentRoom.MaxPlayers;        //當前房間最大人數
         textCountPlayer.text = "連線人數  " + currentCount + " / " + maxCount;
 
+        LoadGameScene(currentCount, maxCount);
+
     }
 
-
+    //其他玩家進入房間
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
@@ -101,5 +104,27 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         int currentCount = PhotonNetwork.CurrentRoom.PlayerCount;   //當前房間人數
         int maxCount = PhotonNetwork.CurrentRoom.MaxPlayers;        //當前房間最大人數
         textCountPlayer.text = "連線人數  " + currentCount + " / " + maxCount;
+
+        LoadGameScene(currentCount, maxCount);
     }
+    /// <summary>
+    /// 載入遊戲
+    /// </summary>
+    /// <param name="currentCount"></param>
+    /// <param name="maxCount"></param>
+    private void LoadGameScene(int currentCount, int maxCount)
+    {
+        //clean code 乾淨程式
+        //1.不重複 . 問題:影響維護性
+        //須進入房間的玩家 等於 最大房間人數時 就進入遊戲場景
+        if (currentCount == maxCount)
+        {
+            //透過 Photon 連線讓玩家 載入指定場景(場景名稱)
+            //場景必須放在 Bulid Settings 內
+            PhotonNetwork.LoadLevel("遊戲場景");
+        }
+    }
+
+
+
 }

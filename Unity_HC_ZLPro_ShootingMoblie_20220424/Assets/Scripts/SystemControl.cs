@@ -1,4 +1,5 @@
 using UnityEngine;
+using Photon.Pun;
 
 
 //namespace 命名空間:程式區塊
@@ -9,7 +10,7 @@ namespace Andews
 	/// 控制系統，荒野亂鬥移動功能
 	/// 虛擬搖桿控制角色移動
 	/// </summary>
-	public class SystemControl : MonoBehaviour
+	public class SystemControl : MonoBehaviourPun
 	{
 
 		[SerializeField, Header("虛擬搖桿")]
@@ -24,6 +25,12 @@ namespace Andews
 		private float speedTurn = 6.0f;
 		[SerializeField, Header("動畫參數走路")]
 		private string parameterwalk = "跑步開關";
+		[SerializeField, Header("畫布")]
+		private GameObject goCanvas;
+		[SerializeField, Header("畫布玩家資訊")]
+		private GameObject goCanvasPlayerInfo;
+		[SerializeField, Header("角色方向圖示")]
+		private GameObject goDirection;
 
 		private Rigidbody rig;
 		private Animator ani;
@@ -32,6 +39,13 @@ namespace Andews
 		{
 			rig = GetComponent<Rigidbody>();
 			ani = GetComponent<Animator>();
+
+			if (photonView.IsMine)
+			{
+				Instantiate(goCanvas);
+				Instantiate(goCanvasPlayerInfo);
+				Instantiate(goDirection);
+			}
 		}
 
 
