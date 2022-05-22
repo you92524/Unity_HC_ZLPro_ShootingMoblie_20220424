@@ -114,9 +114,9 @@ namespace Andrews
             //如果 玩家 作業系統 是 IOS 就指定為 IOS 廣告
             //否則如果 玩家 作業系統 是 Android 就指定為 Android 廣告
 #if UNITY_IOS
-        _adUnitId = _iOSAdUnitId;
+            adsId = adsIdIos;
 #elif UNITY_ANDROID
-        _adUnitId = _androidAdUnitId;
+            adsId = adsIdAndroid;
 #endif
             // PC 測試
             adsId = adsIdAndroid;
