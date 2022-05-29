@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 namespace Andrews 
 {
     /// <summary>
     /// 攻擊系統
     /// </summary>
-    public class SystemAttack : MonoBehaviour
+    public class SystemAttack : MonoBehaviourPun
     {
         [HideInInspector]
         public Button btnFire;
@@ -24,7 +25,14 @@ namespace Andrews
 
         private void Awake()
         {
-            btnFire.onClick.AddListener(Fire);
+            //如果是  本身玩家的物件  就執行  發射
+            if(photonView.IsMine)
+            {
+                //發射按鈕.點擊.添加監聽器(開槍方法)，按下發射按鈕執行開槍方法
+                btnFire.onClick.AddListener(Fire);
+            }
+
+            
         }
 
 
@@ -33,8 +41,8 @@ namespace Andrews
         /// </summary>
         private void Fire()
         {
-            //生成(物件,座標,角度)
-            Instantiate(goBullect, traFire.position, Quaternion.identity);
+            //連線.生成(物件.名稱,座標,角度)
+            PhotonNetwork.Instantiate(goBullect.name , traFire.position, Quaternion.identity);
         }
     
     }
