@@ -41,8 +41,10 @@ namespace Andrews
         /// </summary>
         private void Fire()
         {
-            //連線.生成(物件.名稱,座標,角度)
-            PhotonNetwork.Instantiate(goBullect.name , traFire.position, Quaternion.identity);
+            //暫存子彈 = 連線.生成(物件.名稱,座標,角度)
+            GameObject tempBullet = PhotonNetwork.Instantiate(goBullect.name , traFire.position, Quaternion.identity);
+            //暫存子彈.取得元件<剛體>().添加推力(角色前方*子彈速度)
+            tempBullet.GetComponent<Rigidbody>().AddForce(transform.forward * speedFire);  
         }
     
     }
