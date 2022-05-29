@@ -456,7 +456,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &9126761461652090750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,6 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   v3Offset: {x: 0, y: 5, z: 1}
+  traPlayer: {fileID: 0}
 --- !u!1 &9126761462201026180
 GameObject:
   m_ObjectHideFlags: 0
