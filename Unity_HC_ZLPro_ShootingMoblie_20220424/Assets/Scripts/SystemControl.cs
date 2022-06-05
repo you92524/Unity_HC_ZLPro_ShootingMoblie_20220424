@@ -3,6 +3,7 @@ using Photon.Pun;
 using Cinemachine;
 using Andrews;
 using UnityEngine.UI;
+using TMPro;
 
 
 //namespace 命名空間:程式區塊
@@ -38,10 +39,12 @@ namespace Andews
 		private Rigidbody rig;
 		private Animator ani;
 		private Joystick joystick;
-		private Transform traDirectionIcon;
+		public Transform traDirectionIcon;
 		private CinemachineVirtualCamera cvc;
 		private SystemAttack systemAttack;
 		private DamageManager damageManager;
+
+		
 
 
 		private void Awake()
@@ -67,7 +70,7 @@ namespace Andews
 				cvc.Follow = transform;     //指定追蹤物件
 
 				damageManager.imgHp = GameObject.Find("圖片血條").GetComponent<Image>();
-				damageManager.textHp = GameObject.Find("文字血量").GetComponent<Text>(); 
+				damageManager.textHp = GameObject.Find("文字血量").GetComponent<TextMeshProUGUI>(); 
 
 
 			}
@@ -129,6 +132,9 @@ namespace Andews
 		/// </summary>
 		private void LookDirectionIcon()
 		{
+			//如果 垂直絕對值 小於 0.1 並且 水平絕對值 小於 0.1 就 不處理轉向
+			if (Mathf.Abs(joystick.Vertical) < 0.1f && Mathf.Abs(joystick.Horizontal) < 0.1f) return;
+
 			//取得面向角度 = 四位元.面向角度(方向圖示-角色)-方向圖示與角色的向量
 			Quaternion look = Quaternion.LookRotation(traDirectionIcon.position - transform.position);
 			
