@@ -3,7 +3,7 @@ using Photon.Pun;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-using Andews;
+
 
 namespace Andrews
 {
@@ -110,15 +110,16 @@ namespace Andrews
         {
             systemControl.enabled = false;
             systemAttack.enabled = false;
-            systemControl.traDirectionIcon.gameObject.SetActive(false);
+            //如果 控制系統 的 方向圖示 存在 再處理隱藏
+            if (systemControl.traDirectionIcon) systemControl.traDirectionIcon.gameObject.SetActive(false);
 
-            float valueDissolve = 5;
+            float valueDissolve = 5;                                    //溶解數值起始值
             
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < 30; i++)                                //迴圈執行遞減
             {
                 valueDissolve -= 0.3f;
-                materialDissolve.SetFloat("dissolve", valueDissolve);
-                yield return new WaitForSeconds(0.08f);
+                materialDissolve.SetFloat("dissolve", valueDissolve);   //更新著色器屬性，注意要控制Reference
+                yield return new WaitForSeconds(0.08f);                 //等待
 
 
             }

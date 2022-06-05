@@ -1,13 +1,12 @@
 using UnityEngine;
 using Photon.Pun;
 using Cinemachine;
-using Andrews;
 using UnityEngine.UI;
 using TMPro;
 
 
 //namespace 命名空間:程式區塊
-namespace Andews 
+namespace Andrews 
 {
 
 	/// <summary>
