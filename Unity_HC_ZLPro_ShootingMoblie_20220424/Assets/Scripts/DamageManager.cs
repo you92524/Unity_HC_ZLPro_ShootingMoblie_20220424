@@ -124,7 +124,18 @@ namespace Andrews
 
             }
 
-
+            ReturnToLobby();
+        }
+        /// <summary>
+        /// 回到大廳
+        /// </summary>
+        private void ReturnToLobby()
+        {
+            if (photonView.IsMine)
+            {
+                PhotonNetwork.LeaveRoom();              //離開房間
+                PhotonNetwork.LoadLevel("遊戲大廳");    //回到大廳場景
+            }
         }
 
     }
